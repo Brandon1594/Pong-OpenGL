@@ -9,6 +9,7 @@ class EspacioSimple : public Espacio {
 	private:
 		int ancho;
 		int alto;
+		Pelota* pelota;
 
 	public:
 		EspacioSimple(int an, int al) : ancho(an),alto(al) {}
