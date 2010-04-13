@@ -14,6 +14,11 @@ class EspacioSimple : public Espacio {
 	public:
 		EspacioSimple(int an, int al) : ancho(an),alto(al) {}
 
+		void itera(){
+			//Comprobamos la colisión de la pelota
+			if()
+		}
+
 		int getAncho() const{
 			return ancho;
 		}
