@@ -1,20 +1,16 @@
-/* Tipo RauquetaSimple */
+/* Tipo RaquetaNormal */
 /*
- * RaquetaSimple implementa un rebote basado en la posición
+ * RaquetaNormal implementa un rebote basado en la posición
  * donde la pelota colisiona con la raqueta
  */
 
 #include<Raqueta.h>
-#include<Espacio.h>
-#include<Pelota.h>
-#include<PongException.h>
-#include<Vector.h>
-#inclide<TipoColision.h>
+#include<TipoColision.h>
 
 // Determina la convexidad(positivo) concavidad(negativo) de la raqueta, siendo 0 un espejo.
 const int CONVEXIDAD = 2;
 
-class RaquetaSimple : public Raqueta {
+class RaquetaNormal : public Raqueta {
 	private:
 		const int posX;
 		int posY;
@@ -23,43 +19,46 @@ class RaquetaSimple : public Raqueta {
 		int tamanio;
 
 		const Espacio* espacio;
-		const Pelota* pelota;
 
 	public:
-	
 		//Constructor
-		RaquetaSimple(int pos_x, int vel, int tam) : velocidad(vel), posX(pos_x){
-			if(tam > espacio)	throw PongException("El tamaño de la raqueta no puede ser mayor que el ancho del espacio.");
+		RaquetaNormal(int pos_x, int vel, int tam) : velocidad(vel), espacio(esp), posX(pos_x){
+			if(tam > espacio)
+				throw PongException("El tamaño de la raqueta no puede ser mayor que el ancho del espacio.");
+
 			tamanio = tam;
 			posY = espacio->getAlto()/2;
 			puntuacion = 0;
 		}
 		
-		
-		TipoColision hayColision(int x, int y){
+		TipoColision hayColision(Vector posicion, Vector velocidad){
 			
 			TipoColision tColision;
 		
-			if(pelota->getX() == posX &&
-			   pelota->getY() <= posY + tamanio &&
-			   pelota->getY() >= posY - tamanio){
-			   
-			   tColision = COLISION;			
-			}
-			else{
-			tColision = NO_COLISION;
-			}
+			if(x == posX && y <= posY + tamanio && y >= posY - tamanio)
+				tColision = COLISION;			
+			else
+				tColision = NO_COLISION;
+
 			return tColision;
 		}
 		
-		Vector getRebote(Vector velocidad){
-			Vector aceleracion;
+		Vector getRebote(Vector posicion, Vector velocidad){
 			//'variacion' es un numero entre -1 y 1 que se usará para escalar las componentes
 			//de la aceleracion en función del punto de colisión de la pelota
-			int variacion = tamanio/(tamanio + pelota->getY() - posY);
+			int variacion;
+			int distAlCentro = posicion.x - posY;
+			//Contemplamos el signo de la distancia
+			if(distAlCentro > 0)
+				variacion = tamanio/(tamanio + distAlCentro);
+			else
+				variacion = -tamanio/(tamanio - distAlCentro); 
 				
-			aceleracion.x = 2 * pelota->velocidad.x;
-			aceleracion.y = 2 * pelota->velocidad.y * variacion;
+			//Calculamos la aceleración del rebote
+			Vector aceleracion = {
+				aceleracion.x = 2 * velocidad.x,
+				aceleracion.y = CONVEXIDAD * velocidad.y * variacion
+			};
 				
 			return aceleracion;	
 		}
@@ -75,11 +74,13 @@ class RaquetaSimple : public Raqueta {
 		}
 
 		void incrPunt(){	puntuacion++;	 }
-		void decrPunt(){	puntuacion--;	 }
 		
 		int getPosX(){	return posX;	}
 		int getPosY(){	return posY;	}
 		int getPuntos(){	return puntuacion;	}
-		
-		
+
+		void reset(){
+			posY = espacio->getAlto()/2;
+			puntuacion = 0;
+		}
 };

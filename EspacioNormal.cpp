@@ -4,47 +4,43 @@
  */
 
 #include<Espacio.h>
-#include<TipoColision.h>
 
-class EspacioSimple : public Espacio {
+class EspacioNormal : public Espacio {
 	private:
 		int ancho;
 		int alto;
-		Pelota* pelota;
 
 	public:
-		//Constructor.
-		EspacioSimple(int an, int al) : ancho(an),alto(al) {}
+		EspacioSimple(int an, int al) : ancho(an),alto(al) {
+			if(ancho <= 0 || alto <= 0)
+				throw PongException("No se admite una dimensión negativa o nula");
 
-		//Comprobación de colisiones de la pelota.
-		TipoColision hayColision(int x, int y){
+		//Comprobación de colisiones con la pelota.
+		TipoColision hayColision(Vector posicion) const{
 			
 			TipoColision tColision;
-		
 			
+			if(posicion.x == ancho)
+				tColision = GOL_DER;
 			
-			if(x == ancho){
-			tColision = GOL_DER;
-			}
-			else if(x == 0){
-			tColision = GOL_IZQ;
-			}
-			else if(y == alto){
-			tColision = COLISION;
-			}
-			else if(y == 0){
-			tColision = COLISION;
-			}
-			else{
-			tColision = NO_COLISION;
-			}
+			else if(posicion.x == 0)
+				tColision = GOL_IZQ;
+			
+			if(posicion.y == alto || posicion.y == 0)
+				tColision = COLISION;
+
+			else
+				tColision = NO_COLISION;
+			
+
 			return tColision;
 		}
 		
-		//Envía a la pelota el nuevo vector velocidad.
-		Vector getRebote(Vector velocidad){
+		//Devuelve la aceleración normal que genera el rebote
+		Vector getRebote(Vector velocidad) const{
 			Vector aceleracion = 
-			{aceleracion.x = 2 * pelota->velocidad.x , aceleracion.y = 2 * pelota->velocidad.y}	
+				{aceleracion.x = 2 * pelota->velocidad.x , aceleracion.y = 2 * pelota->velocidad.y}	
+
 			return aceleracion;	
 		}
 
