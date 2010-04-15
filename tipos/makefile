@@ -28,7 +28,9 @@ all : $(OBJECTS)
 	echo "\t* LISTO *"
 
 clean:
+	echo "* BORRANDO *"
 	-rm -vf $(OBJECTS)
+	echo "* LISTO *"
 
 edit:
 	$(EDITOR) $(INCLUDE_RUTE)/*.h $(SRC_RUTE)/*.cpp &

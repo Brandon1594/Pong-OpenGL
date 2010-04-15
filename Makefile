@@ -19,17 +19,25 @@ all :
 	do\
 		echo "** EJECUTANDO MAKE EN $$dir/ **";\
 		make -C $$dir;\
-		if [ $$? -eq 0 ]; then\
-			OBJECTS=$$OBJECTS $$dir/objects/*.o;\
+		echo "** LISTO **";\
+		if [ $$? -eq 0 ]; then \
+			OBJECTS="$$OBJECTS $$dir/objects/*.o";\
 		fi;\
-	done\
+		echo "** ENCONTRADOS LOS SIGUIENTES OBJETOS: $$OBJECTS **";\
+	done
 		
 	#$(COMPILER) $(INCLUDES_RUTES) -oPong $$OBJECTS
 
 clean:
-	for dir in $(SUBMAKES_DIRS)
-		make -C $$dir/makefile clean
+	for dir in $(SUBMAKES_DIRS); do\
+		echo "** EJECUTANDO MAKE CLEAN EN $$dir/ **";\
+		make -C $$dir clean;\
+		echo "** LISTO **";\
+	done\
 
 edit:
-	for dir in $(SUBMAKES_DIRS)
-		make -C $$dir/makefile edit
+	for dir in $(SUBMAKES_DIRS); do\
+		echo "** EJECUTANDO MAKE CLEAN EN $$dir/ **";\
+		make -C $$dir edit;\
+		echo "** LISTO **";\
+	done
