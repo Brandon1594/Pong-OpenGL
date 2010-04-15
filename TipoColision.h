@@ -3,7 +3,7 @@
 #ifndef _TIPO_COLISION
 #define _TIPO_COLISION
 
-typedef{
+typedef enum{
 NO_COLISION,
 COLISION,
 GOL_DER,
