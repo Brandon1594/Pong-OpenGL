@@ -24,8 +24,11 @@ $(OBJ_RUTE)/%.o : $(SRC_RUTE)/%.cpp
 	echo "\t* Compilando $< *"
 	$(COMPILER) -o$@ $(GPP_FLAGS) -c $<
 	
-all : $(OBJECTS)
+all: object $(OBJECTS)
 	echo "\t* LISTO *"
+
+object :
+	-mkdir $(OBJ_RUTE)
 
 clean:
 	echo "* BORRANDO *"
