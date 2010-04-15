@@ -11,23 +11,24 @@ class EspacioNormal : public Espacio {
 		int alto;
 
 	public:
-		EspacioSimple(int an, int al) : ancho(an),alto(al) {
+		EspacioNormal(int an, int al) : ancho(an),alto(al) {
 			if(ancho <= 0 || alto <= 0)
 				throw PongException("No se admite una dimensión negativa o nula");
-
+		}
+		
 		//Comprobación de colisiones con la pelota.
-		TipoColision hayColision(Vector posicion) const{
+		TipoColision hayColision(Vector posicion, int radio) const{
 			
 			TipoColision tColision;
 			
-			if(posicion.x == ancho)
+			if(posicion.x + radio == ancho)
 				tColision = GOL_DER;
 			
-			else if(posicion.x == 0)
+			else if(posicion.x -radio == 0)
 				tColision = GOL_IZQ;
 			
-			if(posicion.y == alto || posicion.y == 0)
-				tColision = COLISION;
+			if(posicion.y + radio == alto || posicion.y - radio == 0)
+				tColision = NORMAL;
 
 			else
 				tColision = NO_COLISION;
@@ -39,9 +40,9 @@ class EspacioNormal : public Espacio {
 		//Devuelve la aceleración normal que genera el rebote
 		Vector getRebote(Vector velocidad) const{
 			Vector aceleracion = 
-				{aceleracion.x = 2 * pelota->velocidad.x , aceleracion.y = 2 * pelota->velocidad.y}	
+				{aceleracion.x = 2 * velocidad.x , aceleracion.y = 2 * velocidad.y};
 
-			return aceleracion;	
+			return aceleracion;
 		}
 
 		//Consultores

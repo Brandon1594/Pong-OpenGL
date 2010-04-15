@@ -31,12 +31,16 @@ class RaquetaNormal : public Raqueta {
 			puntuacion = 0;
 		}
 		
-		TipoColision hayColision(Vector posicion, Vector velocidad){
+		TipoColision hayColision(Vector posicion, Vector velocidad, int radio){
 			
 			TipoColision tColision;
 		
-			if(x == posX && y <= posY + tamanio && y >= posY - tamanio)
-				tColision = COLISION;			
+			if( (posicion.x - radio == posX || posicion.x + radio == posX) && 
+			   posicion.y <= posY + tamanio &&
+			   posicion.y >= posY - tamanio)
+			{
+				tColision = NORMAL;
+			}
 			else
 				tColision = NO_COLISION;
 

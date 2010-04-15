@@ -5,9 +5,9 @@
 
 typedef enum{
 NO_COLISION,
-COLISION,
+NORMAL,
 GOL_DER,
 GOL_IZQ
-}TipoRebote;
+}TipoColision;
 
 #endif
