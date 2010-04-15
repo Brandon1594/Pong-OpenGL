@@ -22,16 +22,21 @@ class RaquetaNormal : public Raqueta {
 
 	public:
 		//Constructor
-		RaquetaNormal(int pos_x, int vel, int tam) : velocidad(vel), espacio(esp), posX(pos_x){
-			if(tam > espacio)
-				throw PongException("El tamaño de la raqueta no puede ser mayor que el ancho del espacio.");
+		RaquetaNormal(int pos_x, int vel, int tam, Espacio* esp) :
+			posX(pos_x),
+			velocidad(vel),
+			tamanio(tam),
+			espacio(esp),
+			puntuacion(0)
+		{
+			if(tamanio > espacio->getAlto()/2)
+				throw PongException("El tamaño de la raqueta no puede ser mayor que el alto del espacio.");
 
-			tamanio = tam;
 			posY = espacio->getAlto()/2;
 			puntuacion = 0;
 		}
 		
-		TipoColision hayColision(Vector posicion, Vector velocidad, int radio){
+		TipoColision hayColision(Vector posicion, int radio){
 			
 			TipoColision tColision;
 		

@@ -4,7 +4,7 @@
 
 COMPILER = g++
 EDITOR = geany
-GPP_FLAGS = -I$(INCLUDE_RUTE)/
+GPP_FLAGS = -lm -I$(INCLUDE_RUTE)/
 
 .PHONY : clean edit
 .SILENT :
@@ -18,7 +18,6 @@ OBJECTS = \
 	$(OBJ_RUTE)/PelotaNormal.o \
 	$(OBJ_RUTE)/RaquetaNormal.o \
 	$(OBJ_RUTE)/Vector.o \
-	$(OBJ_RUTE)/TipoColision.o \
 	$(OBJ_RUTE)/PongException.o 
 
 $(OBJ_RUTE)/%.o : $(SRC_RUTE)/%.cpp

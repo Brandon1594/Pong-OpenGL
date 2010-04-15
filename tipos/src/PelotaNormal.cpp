@@ -1,10 +1,12 @@
 /* Tipo PelotaNormal */
 
-#include<Pelota.h>
-#include<cmath>
+#include <Pelota.h>
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
 
 //Ángulo máximo de salida para el reset(int modVel)
-const ANG_MAX_SAL = M_PI/3;	//En radianes (60º)
+const int ANG_MAX_SAL = M_PI/3;	//En radianes (60º)
 
 class PelotaNormal : public Pelota {
 	private:
@@ -27,7 +29,7 @@ class PelotaNormal : public Pelota {
 		}
 
 		void muevete(){
-			Posicion += velocidad;
+			posicion += velocidad;
 
 			TipoColision colisionEsp = espacio->hayColision(posicion,radio);
 			TipoColision colisionRaqI = raquetaI->hayColision(posicion,radio);
@@ -76,10 +78,10 @@ class PelotaNormal : public Pelota {
 			
 			//Ponemos a la velocidad una dirección horizontal del mismo sentido anterior.
 			if(velocidad.x < 0)
-				velocidad.x = (int) -sqrt( pow(modVel,2) - pow(velocidad.y,2));
+				velocidad.x = (int) -sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) );
 			else
-				velocidad.x = (int) sqrt( pow(modVel,2) - pow(velocidad.y,2));
+				velocidad.x = (int) sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) );
 				
 			velocidad.y = 0;
 		}
-}
+};

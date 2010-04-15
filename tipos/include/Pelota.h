@@ -11,9 +11,9 @@
 
 class Pelota {
 	public:
-		void muevete() const = 0;
-		Vector getPos() const = 0;
-		void reset(int modVel) const = 0;
-}
+		virtual void muevete() const = 0;
+		virtual Vector getPos() const = 0;
+		virtual void reset(int modVel) const = 0;
+};
 
 #endif

@@ -14,6 +14,6 @@ class PongException : public std::exception {
 	public:
 		PongException(const char* cadena);	
 		const char* what() const throw();
-}
+};
 
 #endif
