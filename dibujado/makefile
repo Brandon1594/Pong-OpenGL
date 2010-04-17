@@ -1,10 +1,10 @@
 ## MAKEFILE PONG-OPENGL ##
-## TIPOS ##
+## DIBUJADO ##
 
 
 COMPILER = g++
 EDITOR = geany
-GPP_FLAGS = -lm -I$(INCLUDE_RUTE)/
+GPP_FLAGS = -lm -I$(INCLUDE_RUTE)/ -I../tipos/include/
 
 .PHONY : clean edit
 .SILENT :
@@ -14,12 +14,7 @@ SRC_RUTE = src
 OBJ_RUTE = objects
 OBJ_RUTE_DBG = $(OBJ_RUTE)
 
-OBJECTS = \
-	$(OBJ_RUTE)/EspacioNormal.o \
-	$(OBJ_RUTE)/PelotaNormal.o \
-	$(OBJ_RUTE)/RaquetaNormal.o \
-	$(OBJ_RUTE)/Vector.o \
-	$(OBJ_RUTE)/PongException.o 
+OBJECTS = $(OBJ_RUTE)/Dibujado.o
 
 $(OBJ_RUTE)/%.o : $(SRC_RUTE)/%.cpp
 	echo "\t* Compilando $< *"

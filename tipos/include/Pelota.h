@@ -11,9 +11,10 @@
 
 class Pelota {
 	public:
-		virtual void muevete() const = 0;
+		virtual void muevete() = 0;
 		virtual Vector getPos() const = 0;
-		virtual void reset(int modVel) const = 0;
+		virtual int getRadio() const = 0;
+		virtual void reset(int modVel) = 0;
 };
 
 #endif

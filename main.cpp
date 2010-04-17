@@ -1,3 +1,6 @@
+#include <iostream>
+#include <cstdlib>
+
 #include <Espacio.h>
 #include <Pelota.h>
 #include <Raqueta.h>
@@ -5,32 +8,75 @@
 #include <Dibujado.h>
 
 //Tipos
-	Espacio* espacio;
-	Pelota* pelota;
-	Raqueta* raquetaIzq;
-	Raqueta* raquetaDer;
+Espacio* espacio;
+Pelota* pelota;
+Raqueta* raquetaIzq;
+Raqueta* raquetaDer;
 
-	int resolucionX = 600;
-	int resoluciónY = 200;
+//Función Idle
+void itera(int nada);
+void dibujaTodo();
+void teclas(unsigned char tecla, int x, int y);
+void raton(int boton, int estado, int x, int y);
+void escalarVentana(int x, int y);
 
-	int velocidadPelota = 20;	// Píxeles/Iteración
-	int velocidadRaquetas = 30;	// Píxeles/Iteración
-
-void main(){
+int main(int argc, char **argv){
+	glutInit(&argc, argv);
 	
 	inicializaTiposNormales(espacio, pelota, raquetaIzq, raquetaDer);
-	inicializaOGL(espacio->getAncho()+4, espacio->getAlto()+4);
+	inicializaOGL(espacio->getAncho(), espacio->getAlto());
 
-	glutDisplayFunc(dibuja);
+	glutDisplayFunc(dibujaTodo);
 	glutKeyboardFunc(teclas);
 	glutMouseFunc(raton);
-	glutReshapeFunc(ventanaEscalada);
-	glutIdleFunc(itera);
-	
+	glutReshapeFunc(escalarVentana);
+	//glutIdleFunc(itera);
+	itera(0);
 	glutMainLoop();
 	
+	return 0;
 }
 
-void inicializaTipos(Espacio*, Pelota*, Raqueta* raquetaIzq, Raqueta* raquetaDer){
+void itera(int nada){
+	pelota->muevete();
+	glutPostRedisplay();
+	
+	glutTimerFunc(50, itera, nada);
+}
+
+void dibujaTodo(){
+	glClear(GL_COLOR_BUFFER_BIT);
+	
+	dibuja(espacio);
+	dibuja(raquetaIzq);
+	dibuja(raquetaDer);
+	dibuja(pelota);
+	
+	glutSwapBuffers();
+}
+
+void teclas(unsigned char tecla, int x, int y){
+	switch (tecla) {
+		case 27:	//<ESC>
+			liberaTiposNormales(espacio, pelota, raquetaIzq, raquetaDer);
+			std::cout << "Memoria liberada." << std::endl;
+			exit(0);
+		break;
+		
+		case 119:	//w
+			raquetaIzq->mueveteArriba();
+		break;
+		
+		case 115:	//s
+			raquetaIzq->mueveteAbajo();
+		break;
+	}
+}
+
+void raton(int boton, int estado, int x, int y){
+	
+}
+	
+void escalarVentana(int x, int y){
 	
 }
