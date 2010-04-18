@@ -22,13 +22,14 @@ class PelotaNormal : public Pelota {
 		Espacio* espacio;
 
 	public:
-		PelotaNormal(int modVel, int radio, Raqueta*& raqI, Raqueta*& raqD, Espacio*& esp);
+		PelotaNormal(double modVel, int radio, Raqueta*& raqI, Raqueta*& raqD, Espacio*& esp);
 
 		void muevete();		
 		Vector getPos() const;
 		int getRadio() const;
-		void reset(int modVel);
-
+		void reset(double modVel);
+		void reset();
+		
 	private:
 		void resetGol();
 };

@@ -17,7 +17,7 @@
  * 		Espacio* espacio;
  */
 
-PelotaNormal::PelotaNormal(int modVel, int rad, Raqueta*& raqI, Raqueta*& raqD, Espacio*& esp) : 
+PelotaNormal::PelotaNormal(double modVel, int rad, Raqueta*& raqI, Raqueta*& raqD, Espacio*& esp) : 
 	radio(rad),
 	raquetaI(raqI),
 	raquetaD(raqD),
@@ -34,26 +34,29 @@ void PelotaNormal::muevete(){
 	TipoColision colisionRaqI = raquetaI->hayColision(posicion,radio);
 	TipoColision colisionRaqD = raquetaD->hayColision(posicion,radio);
 
-	printf("\nE:%i RI:%i RD:%i",colisionEsp,colisionRaqI,colisionRaqD);
-	printf("\n( %i, %i )",velocidad.x,velocidad.y);
+	//printf("\nE:%i RI:%i RD:%i",colisionEsp,colisionRaqI,colisionRaqD);
+	//printf("\n( %i, %i )",velocidad.x,velocidad.y);
 
-	if(colisionEsp){
-		velocidad += espacio->getRebote(velocidad);
-	
-		if(colisionEsp == GOL_IZQ){
+	switch(colisionEsp){
+		case NORMAL:
+			velocidad += espacio->getRebote(velocidad);
+		break;
+		
+		case  GOL_IZQ:
 			raquetaD->incrPuntos();
 			resetGol();
-			
-		}
-		if(colisionEsp == GOL_DER){
+		break;
+	
+		case GOL_DER:
 			raquetaI->incrPuntos();
 			resetGol();
-		}
+		break;
 		
 	}
+	
 	if(colisionRaqI)
 		velocidad += raquetaI->getRebote(posicion,velocidad);
-	
+		
 	else if(colisionRaqD)
 		velocidad += raquetaD->getRebote(posicion,velocidad);
 }
@@ -61,16 +64,26 @@ void PelotaNormal::muevete(){
 Vector PelotaNormal::getPos() const{ return posicion; }
 int PelotaNormal::getRadio() const{ return radio; }
 
-void PelotaNormal::reset(int modVel){
-	//Reseteamos la posición
+void PelotaNormal::reset(double modVel){
+	//Centramos la pelota en el campo
 	posicion.x = espacio->getAncho()/2;
 	posicion.y = espacio->getAlto()/2;
 	
-	//Ponemos a la velocidad una dirección aleatoria
-	velocidad.x = rand()%(modVel+1) - modVel;
-	velocidad.y = rand()% (int)( tan( ANG_MAX_SAL )/velocidad.x +1  - modVel);
-	//Aseguramos el módulo del vector
-	velocidad.x = (int) sqrt( pow(modVel,2) - pow(velocidad.y,2));
+	//Calculamos un ángulo aleatorio positivo
+	double angulo = fmod(rand(),ANG_MAX_SAL);
+	
+	//Calculamos las componentes de la velocidad
+	//TODO: Con ceil el módulo de la velocidad es cada vez mayor y con floor al revés
+	velocidad.x = (int)( ceil( modVel * cos(angulo) ) );
+	velocidad.y = (int)( ceil( modVel * sin(angulo) ) );
+	
+	//Ponemos aleatoriamente el ángulo de salida negativo o hacia la izquierda
+	if(rand()%2)	velocidad.y = -velocidad.y;
+	if(rand()%2)	velocidad.x = -velocidad.x;
+}
+
+void PelotaNormal::reset(){
+	reset( sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) ) );
 }
 
 void PelotaNormal::resetGol(){

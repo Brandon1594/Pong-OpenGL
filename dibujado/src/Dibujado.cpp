@@ -14,7 +14,7 @@ void inicializaTiposNormales(Espacio*& espacio, Pelota*& pelota, Raqueta*& raque
 	espacio = new EspacioNormal(1000,500);
 	raquetaI = new RaquetaNormal(30, 60, 15, 1, espacio);
 	raquetaD = new RaquetaNormal(970, 60, 15, 1, espacio);
-	pelota = new PelotaNormal(6, 10, raquetaI, raquetaD, espacio);
+	pelota = new PelotaNormal(6.0, 10, raquetaI, raquetaD, espacio);
 	
 }
 

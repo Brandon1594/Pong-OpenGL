@@ -70,6 +70,10 @@ void teclas(unsigned char tecla, int x, int y){
 		case 115:	//s
 			raquetaIzq->mueveteAbajo();
 		break;
+		
+		case 114:	//r
+			pelota->reset();
+		break;
 	}
 }
 
