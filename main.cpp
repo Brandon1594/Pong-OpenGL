@@ -23,7 +23,7 @@ void escalarVentana(int x, int y);
 int main(int argc, char **argv){
 	glutInit(&argc, argv);
 	
-	inicializaTiposNormales(espacio, pelota, raquetaIzq, raquetaDer);
+	inicializaTipos(espacio, pelota, raquetaIzq, raquetaDer);
 	inicializaOGL(espacio->getAncho(), espacio->getAlto());
 
 	glutDisplayFunc(dibujaTodo);
@@ -58,7 +58,7 @@ void dibujaTodo(){
 void teclas(unsigned char tecla, int x, int y){
 	switch (tecla) {
 		case 27:	//<ESC>
-			liberaTiposNormales(espacio, pelota, raquetaIzq, raquetaDer);
+			liberaTipos(espacio, pelota, raquetaIzq, raquetaDer);
 			std::cout << "Memoria liberada." << std::endl;
 			exit(0);
 		break;

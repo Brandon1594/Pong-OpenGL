@@ -1,17 +1,14 @@
 /* Tipo RaquetaNormal */
 /*
- * RaquetaNormal implementa un rebote basado en la posición
- * donde la pelota colisiona con la raqueta
+ * RaquetaNormal implementa un rebote normal, es decir,
+ * la pelota sale rebotada con el mismo ángugo con el que entra
+ * a colisionar.
  */
 
 #include <RaquetaNormal.h>
 
-/* CONSTANTES
- * 	const int CONVEXIDAD = 2;
- */
-
 /* ATRIBUTOS
- * 	private:
+ * 	protected:
  * 		const int posX;
  * 		int posY;
  * 		int velocidad;
@@ -72,22 +69,13 @@ TipoColision RaquetaNormal::hayColision(Vector posicion, int radio) const {
 }
 
 Vector RaquetaNormal::getRebote(Vector posicion, Vector velocidad) const{
-	//'variacion' es un numero entre -1 y 1 que se usará para escalar las componentes
-	//de la aceleracion en función del punto de colisión de la pelota
-	int variacion;
-	int distAlCentro = posicion.x - posY;
-	//Contemplamos el signo de la distancia
-	if(distAlCentro > 0)
-		variacion = tamanio/(tamanio + distAlCentro);
-	else
-		variacion = -tamanio/(tamanio - distAlCentro); 
-		
+	
 	//Calculamos la aceleración del rebote
 	Vector aceleracion = {
 		aceleracion.x = -2 * velocidad.x,
-		aceleracion.y = CONVEXIDAD * velocidad.y * variacion
+		aceleracion.y = 0
 	};
-		
+	
 	return aceleracion;	
 }
 

@@ -18,6 +18,7 @@ OBJECTS = \
 	$(OBJ_RUTE)/EspacioNormal.o \
 	$(OBJ_RUTE)/PelotaNormal.o \
 	$(OBJ_RUTE)/RaquetaNormal.o \
+	$(OBJ_RUTE)/RaquetaConvexa.o \
 	$(OBJ_RUTE)/Vector.o \
 	$(OBJ_RUTE)/PongException.o 
 

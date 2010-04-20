@@ -16,8 +16,8 @@ const double ANG_RES = M_PI - 0.07;
 //Cálculo del número de lados del polígono
 const int NUM_LDS = 2*M_PI/(M_PI - ANG_RES);
 
-void inicializaTiposNormales(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
-void liberaTiposNormales(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
+void inicializaTipos(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
+void liberaTipos(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
 void inicializaOGL(int ventanaAncho, int ventanaAlto);
 
 void dibuja(Espacio*);

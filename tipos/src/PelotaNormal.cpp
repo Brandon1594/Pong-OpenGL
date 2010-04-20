@@ -1,7 +1,7 @@
 /* Tipo PelotaNormal */
 
 #include <PelotaNormal.h>
-#include <cstdio>
+
 /* CONSTANTES
  * 	const int ANG_MAX_SAL = M_PI/3;	//En radianes (60º)
  */
@@ -34,15 +34,12 @@ void PelotaNormal::muevete(){
 	TipoColision colisionRaqI = raquetaI->hayColision(posicion,radio);
 	TipoColision colisionRaqD = raquetaD->hayColision(posicion,radio);
 
-	//printf("\nE:%i RI:%i RD:%i",colisionEsp,colisionRaqI,colisionRaqD);
-	//printf("\n( %i, %i )",velocidad.x,velocidad.y);
-
 	switch(colisionEsp){
 		case NORMAL:
 			velocidad += espacio->getRebote(velocidad);
 		break;
 		
-		case  GOL_IZQ:
+		case GOL_IZQ:
 			raquetaD->incrPuntos();
 			resetGol();
 		break;
@@ -93,9 +90,9 @@ void PelotaNormal::resetGol(){
 	
 	//Ponemos a la velocidad una dirección horizontal del mismo sentido anterior.
 	if(velocidad.x < 0)
-		velocidad.x = -(int) sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) );
+		velocidad.x = -(int) mod(velocidad);
 	else
-		velocidad.x = (int) sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) );
+		velocidad.x = (int) mod(velocidad);
 		
 	velocidad.y = 0;
 }

@@ -5,20 +5,21 @@
 #include <EspacioNormal.h>
 #include <PelotaNormal.h>
 #include <RaquetaNormal.h>
+#include <RaquetaConvexa.h>
 
 #include <cstdio>
 #include <cmath>
 
-void inicializaTiposNormales(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
+void inicializaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	
 	espacio = new EspacioNormal(1000,500);
-	raquetaI = new RaquetaNormal(30, 60, 15, 1, espacio);
-	raquetaD = new RaquetaNormal(970, 60, 15, 1, espacio);
+	raquetaI = new RaquetaConvexa(30, 60, 15, 10, espacio,20);
+	raquetaD = new RaquetaNormal(970, 60, 15, 10, espacio);
 	pelota = new PelotaNormal(6.0, 10, raquetaI, raquetaD, espacio);
 	
 }
 
-void liberaTiposNormales(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
+void liberaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	delete espacio;
 	delete pelota;
 	delete raquetaI;

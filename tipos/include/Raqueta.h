@@ -4,7 +4,6 @@
 #define _RAQUETA
 
 #include <Espacio.h>
-#include <PongException.h>
 #include <Vector.h>
 #include <TipoColision.h>
 

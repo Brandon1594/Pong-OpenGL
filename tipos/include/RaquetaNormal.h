@@ -1,19 +1,18 @@
 /* Tipo RaquetaNormal */
 /*
- * RaquetaNormal implementa un rebote basado en la posición
- * donde la pelota colisiona con la raqueta
+ * RaquetaNormal implementa un rebote normal, es decir,
+ * la pelota sale rebotada con el mismo ángugo con el que entra
+ * a colisionar.
  */
 
 #ifndef _RAQUETA_NORMAL
 #define _RAQUETA_NORMAL
 
 #include <Raqueta.h>
-
-// Determina la convexidad(positivo) concavidad(negativo) de la raqueta, siendo 0 un espejo.
-const int CONVEXIDAD = 2;
+#include <PongException.h>
 
 class RaquetaNormal : public Raqueta {
-	private:
+	protected:
 		const int posX;
 		int posY;
 		int velocidad;

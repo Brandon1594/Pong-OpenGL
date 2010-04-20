@@ -21,18 +21,17 @@ TipoColision EspacioNormal::hayColision(Vector posicion, int radio) const{
 	
 	TipoColision tColision;
 	
-	if(posicion.x + radio >= ancho)
-		tColision = GOL_DER;
-	
-	else if(posicion.x - radio <= 0)
-		tColision = GOL_IZQ;
-	
 	if(posicion.y + radio >= alto || posicion.y - radio <= 0)
 		tColision = NORMAL;
 
 	else
 		tColision = NO_COLISION;
 	
+	if(posicion.x + radio >= ancho)
+		tColision = GOL_DER;
+	
+	else if(posicion.x - radio <= 0)
+		tColision = GOL_IZQ;	
 
 	return tColision;
 }
