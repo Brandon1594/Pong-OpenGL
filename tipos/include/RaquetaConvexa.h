@@ -8,6 +8,7 @@
  */
 
 #include <RaquetaNormal.h>
+#include <cmath>
 
 #ifndef _RAQUETA_CONVEXA
 #define _RAQUETA_CONVEXA

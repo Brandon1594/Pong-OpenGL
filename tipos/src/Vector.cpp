@@ -23,7 +23,7 @@ const Vector operator*(const Vector v, const int esc){
 	return escalado;
 }
 
-const int operator*(const Vector v1, const Vector v2){
+const double operator*(const Vector v1, const Vector v2){
 	return v1.x * v2.x  +  v1.y * v2.y;
 }
 

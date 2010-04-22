@@ -5,7 +5,6 @@
 
 #include <Vector.h>
 #include <TipoColision.h>
-#include <PongException.h>
 
 class Espacio {
 	public:

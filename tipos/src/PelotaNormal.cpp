@@ -71,8 +71,8 @@ void PelotaNormal::reset(double modVel){
 	
 	//Calculamos las componentes de la velocidad
 	//TODO: Con ceil el módulo de la velocidad es cada vez mayor y con floor al revés
-	velocidad.x = (int)( ceil( modVel * cos(angulo) ) );
-	velocidad.y = (int)( ceil( modVel * sin(angulo) ) );
+	velocidad.x = modVel * cos(angulo);
+	velocidad.y = modVel * sin(angulo);
 	
 	//Ponemos aleatoriamente el ángulo de salida negativo o hacia la izquierda
 	if(rand()%2)	velocidad.y = -velocidad.y;
@@ -80,7 +80,7 @@ void PelotaNormal::reset(double modVel){
 }
 
 void PelotaNormal::reset(){
-	reset( sqrt( pow(velocidad.x,2) + pow(velocidad.y,2) ) );
+	reset( mod(velocidad) );
 }
 
 void PelotaNormal::resetGol(){
@@ -90,9 +90,9 @@ void PelotaNormal::resetGol(){
 	
 	//Ponemos a la velocidad una dirección horizontal del mismo sentido anterior.
 	if(velocidad.x < 0)
-		velocidad.x = -(int) mod(velocidad);
+		velocidad.x = -mod(velocidad);
 	else
-		velocidad.x = (int) mod(velocidad);
+		velocidad.x = mod(velocidad);
 		
 	velocidad.y = 0;
 }

@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
+#include <PongException.h>
 
 //Ángulo máximo de salida para el reset(int modVel)
 const double ANG_MAX_SAL = M_PI/3;	//En radianes (60º)

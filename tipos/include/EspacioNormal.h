@@ -6,6 +6,7 @@
 #define _ESPACIO_NORMAL
 
 #include <Espacio.h>
+#include <PongException.h>
 
 class EspacioNormal : public Espacio {
 	private:

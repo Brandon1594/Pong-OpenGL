@@ -3,7 +3,7 @@
  * podría disponer también de fuerzas, cambios de tamaño, etc.
  */
 
-#include<EspacioNormal.h>
+#include <EspacioNormal.h>
 
 /* ATRIBUTOS
  * 	private:

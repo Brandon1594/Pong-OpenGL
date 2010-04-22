@@ -19,11 +19,10 @@
  * 		const Espacio* espacio;
  * 
  *  RaquetaConvexa:
- * 		const int distFocal;
+ * 		const int distFocal;	//Distancia del foco al centro de la raqueta
  */
 
 #include <RaquetaConvexa.h>
-#include <PongException.h>
 
 RaquetaConvexa::RaquetaConvexa(int pos_x, int tam, int an, int vel, Espacio*& esp,int distF) :
 	RaquetaNormal(pos_x,tam,an,vel,esp),
@@ -35,10 +34,9 @@ RaquetaConvexa::RaquetaConvexa(int pos_x, int tam, int an, int vel, Espacio*& es
 
 Vector RaquetaConvexa::getRebote(Vector posicion, Vector velocidad) const{
 	
-	Vector direccion = {-distFocal , posicion.y - posY};
+	Vector direccion = { -distFocal , posicion.y - posY };
 	
-	//Falla debido a los casting de double a int
-	Vector nuevaVelocidad = direccion/(mod(direccion) * velocidad.x);
+	Vector nuevaVelocidad = (direccion/mod(direccion)) * fabs(velocidad.x);
 	nuevaVelocidad.y += velocidad.y;
 	
 	Vector aceleracion = nuevaVelocidad - velocidad;

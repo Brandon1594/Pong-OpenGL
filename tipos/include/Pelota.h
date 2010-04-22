@@ -3,11 +3,10 @@
 #ifndef _PELOTA
 #define _PELOTA
 
-#include<Raqueta.h>
-#include<Espacio.h>
-#include<Vector.h>
-#include<TipoColision.h>
-#include<PongException.h>
+#include <Raqueta.h>
+#include <Espacio.h>
+#include <Vector.h>
+#include <TipoColision.h>
 
 class Pelota {
 	public:
