@@ -13,9 +13,9 @@
 void inicializaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	
 	espacio = new EspacioNormal(1000,500);
-	raquetaI = new RaquetaConvexa(30, 60, 15, 10, espacio,-30);
+	raquetaI = new RaquetaConvexa(30, 60, 15, 10, espacio,-70);
 	raquetaD = new RaquetaNormal(970, 60, 15, 10, espacio);
-	pelota = new PelotaNormal(6.0, 10, raquetaI, raquetaD, espacio);
+	pelota = new PelotaNormal(4.0, 5, raquetaI, raquetaD, espacio);
 	
 }
 
@@ -48,23 +48,16 @@ void dibuja(Espacio* espacio){
 }
 
 void dibuja(Pelota* pelota){
-	const int radio = pelota->getRadio();
-	const int x0 = pelota->getPos().x;
-	const int y0 = pelota->getPos().y;
-	
-	glPointSize(7);
-	glBegin(GL_POINTS);
-		glVertex2i(x0,y0);
-	glEnd();
-	//printf("\n( %i, %i )",x0,y0);
-	
+	const double radio = pelota->getRadio();
+	const double x0 = pelota->getPos().x;
+	const double y0 = pelota->getPos().y;
+		
 	glBegin(GL_POLYGON);
 		for(int i = 0 ; i < NUM_LDS ; i++){
 			glVertex2i(
-				radio * cos(2*M_PI*NUM_LDS*i) + x0,
-				radio * sin(2*M_PI*NUM_LDS*i) + y0
+				radio * cos(2.0*M_PI*i/NUM_LDS) + x0,
+				radio * sin(2.0*M_PI*i/NUM_LDS) + y0
 			);
-			//printf("\n( %i, %i )",radio * cos(2*M_PI*NUM_LDS*i) + x0,radio * sin(2*M_PI*NUM_LDS*i) + y0);
 		}
 	glEnd();
 }

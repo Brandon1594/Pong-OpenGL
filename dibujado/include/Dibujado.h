@@ -11,10 +11,10 @@
 #include <cmath>
 
 //Ángulo interno del polígono regular que representa la pelota (ángulo de resolución)
-const double ANG_RES = M_PI - 0.07;
+const double ANG_RES = M_PI - 0.5;
 
 //Cálculo del número de lados del polígono
-const int NUM_LDS = 2*M_PI/(M_PI - ANG_RES);
+const double NUM_LDS = 2*M_PI/(M_PI - ANG_RES);
 
 void inicializaTipos(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
 void liberaTipos(Espacio*&, Pelota*&, Raqueta*& raquetaIzq, Raqueta*& raquetaDer);
