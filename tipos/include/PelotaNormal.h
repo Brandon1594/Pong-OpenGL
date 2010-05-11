@@ -28,6 +28,7 @@ class PelotaNormal : public Pelota {
 		void muevete();		
 		Vector getPos() const;
 		int getRadio() const;
+		Vector getVel() const;
 		void reset(double modVel);
 		void reset();
 		

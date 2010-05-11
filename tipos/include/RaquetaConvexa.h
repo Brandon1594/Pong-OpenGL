@@ -18,9 +18,9 @@ class RaquetaConvexa : public RaquetaNormal {
 		const int distFocal;	//Distancia del foco al centro de la raqueta en píxeles
 	
 	public:
-		RaquetaConvexa(int pos_x, int tam, int an, int vel, Espacio*& esp, int distFocal);
+		RaquetaConvexa(int pos_x, int an, int al, int vel, Espacio*& esp, int distFocal);
 	
-		Vector getRebote(Vector posicion, Vector velocidad) const;
+		Vector getRebote(Pelota*) const;
 
 };
 

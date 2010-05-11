@@ -13,8 +13,8 @@
  * 		int posY;
  * 		int velocidad;
  * 		int puntuacion;
- * 		int tamanio;	//Es la mitad del largo de la raqueta
- * 		int ancho;
+ * 		int ancho;	//Es la mitad del ancho de la raqueta
+ * 		int alto;	//Es la mitad del largo de la raqueta
  * 
  * 		const Espacio* espacio;
  * 
@@ -24,22 +24,22 @@
 
 #include <RaquetaConvexa.h>
 
-RaquetaConvexa::RaquetaConvexa(int pos_x, int tam, int an, int vel, Espacio*& esp,int distF) :
-	RaquetaNormal(pos_x,tam,an,vel,esp),
+RaquetaConvexa::RaquetaConvexa(int pos_x, int an, int al, int vel, Espacio*& esp,int distF) :
+	RaquetaNormal(pos_x,an,al,vel,esp),
 	distFocal(distF)
 {
 		if(distFocal == 0)
 			throw PongException("La distancia focal no puede ser nula");
 }
 
-Vector RaquetaConvexa::getRebote(Vector posicion, Vector velocidad) const{
+Vector RaquetaConvexa::getRebote(Pelota* pelota) const{
 	
-	Vector direccion = { -distFocal , posicion.y - posY };
+	Vector direccion = { -distFocal , pelota.getPos().y - posY };
 	
-	Vector nuevaVelocidad = (direccion/mod(direccion)) * fabs(velocidad.x);
-	nuevaVelocidad.y += velocidad.y;
+	Vector nuevaVelocidad = (direccion/mod(direccion)) * fabs(pelota.getVel().x);
+	nuevaVelocidad.y += pelota.getVel().y;
 	
-	Vector aceleracion = nuevaVelocidad - velocidad;
+	Vector aceleracion = nuevaVelocidad - pelota.getVel();
 	
 	return aceleracion;
 	

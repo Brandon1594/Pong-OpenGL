@@ -49,8 +49,8 @@ void RaquetaNormal::incrPuntos(){ puntuacion++; }
 TipoColision RaquetaNormal::hayColision(Vector posicion, int radio) const {
 	
 	TipoColision tColision;
-	int x = posicion.x;
-	int y = posicion.y;
+	double x = posicion.x;
+	double y = posicion.y;
 
 	if(
 		(

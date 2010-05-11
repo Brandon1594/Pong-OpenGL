@@ -13,6 +13,7 @@ class Pelota {
 		virtual void muevete() = 0;
 		virtual Vector getPos() const = 0;
 		virtual int getRadio() const = 0;
+		virtual Vector getVel() const = 0;
 		virtual void reset(double modVel) = 0;
 		virtual void reset() = 0;
 };

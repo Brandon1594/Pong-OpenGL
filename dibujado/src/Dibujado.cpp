@@ -13,8 +13,8 @@
 void inicializaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	
 	espacio = new EspacioNormal(1000,500);
-	raquetaI = new RaquetaConvexa(30, 60, 15, 10, espacio,-70);
-	raquetaD = new RaquetaNormal(970, 60, 15, 10, espacio);
+	raquetaI = new RaquetaConvexa(30, 15, 60, 10, espacio,-70);
+	raquetaD = new RaquetaNormal(970, 15, 60, 10, espacio);
 	pelota = new PelotaNormal(4.0, 5, raquetaI, raquetaD, espacio);
 	
 }
@@ -67,19 +67,19 @@ void dibuja(Raqueta* raqueta){
 	glBegin(GL_POLYGON);
 		glVertex2i(
 			raqueta->getPosX() - raqueta->getAncho(),
-			raqueta->getPosY() - raqueta->getTamanio()
+			raqueta->getPosY() - raqueta->getAlto()
 		);
 		glVertex2i(
 			raqueta->getPosX() - raqueta->getAncho(),
-			raqueta->getPosY() + raqueta->getTamanio()
+			raqueta->getPosY() + raqueta->getAlto()
 		);
 		glVertex2i(
 			raqueta->getPosX() + raqueta->getAncho(),
-			raqueta->getPosY() + raqueta->getTamanio()
+			raqueta->getPosY() + raqueta->getAlto()
 		);
 		glVertex2i(
 			raqueta->getPosX() + raqueta->getAncho(),
-			raqueta->getPosY() - raqueta->getTamanio()
+			raqueta->getPosY() - raqueta->getAlto()
 		);
 	glEnd();
 	

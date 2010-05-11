@@ -35,7 +35,9 @@ clean:
 
 edit:
 	for dir in $(SUBMAKES_DIRS); do\
+		geany main.cpp &\
 		echo "** EJECUTANDO MAKE EDIT EN $$dir/ **";\
 		make -C $$dir edit;\
 		echo "** LISTO **";\
+		geany Makefile &\
 	done
