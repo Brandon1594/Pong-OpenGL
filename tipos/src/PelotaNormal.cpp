@@ -36,40 +36,28 @@ void PelotaNormal::muevete(){
 void PelotaNormal::muevete(double tiempo){
 	
 	/* Primero se comprueba si la pelota va ha estar en el interior de la
-	 * raqueta, si es así la pelota "se ha pasado", hay que calcular dónde
-	 * tendría que haber chocado y la porción de iteración (tiempo) que tardará
-	 * en hacerlo.Con estos datos se vuelve ha repetir recursivamente el proceso
-	 * hasta completar la iteración.
-	 * 
-	 * Para calcular el punto de colisión con la raqueta y el espacio y el
-	 * tiempo que queda hasta que colisione usamos la proporcionalidad
-	 * entre triángulos tal y como se muestra en el esquema: 
-                                O  _  _ 
-                             | /|   |  |
-                             |/ |   |y |          Y/y = X/x
-                             *__|  _|  |Y
-                            /|  |      |          y = Yx/X
-                           /_|__|     _|
-                          O  '    
-                             |__|
-                              x
-                          |_____|
-                             X
-    */
+	 * raqueta o del espacio(hayColision), si es así la pelota "se ha pasado", 
+	 * hay que calcular dónde tendría que haber chocado y la porción de
+	 * iteración (tiempo) que tardará en hacerlo. Con estos datos se vuelve ha
+	 * repetir recursivamente el proceso hasta completar la iteración.
+	 */
     
     Vector postPosicion = posicion + velocidad*tiempo;
 
-	TipoColision colisionEsp = espacio->hayColision(postPosicion,radio);
-	TipoColision colisionRaqI = raquetaI->hayColision(postPosicion,radio);
-	TipoColision colisionRaqD = raquetaD->hayColision(postPosicion,radio);
+	TipoColision colisionEsp = espacio->hayColision(this);
+	TipoColision colisionRaqI = raquetaI->hayColision(this);
+	TipoColision colisionRaqD = raquetaD->hayColision(this);
 
 	switch(colisionEsp){
 		case NORMAL:
-			//TODO: Calcular tiempo ¿espacio->getTiempoColision(posicion,postPosicion,radio)?
+			Vector posicionColision = espacio->getPosicionColision(posicion,postPosicion,radio);
+			double tiempoColision = mod(posicionColision)/mod(velocidad);
+			tiempo -= tiempoColision;
 			
-			posicion += velocidad*tiempo;
-		
+			posicion = posicionColision;		
 			velocidad += espacio->getRebote(velocidad);
+			
+			muevete(tiempo);
 		break;
 
 		case GOL_IZQ:
@@ -81,45 +69,38 @@ void PelotaNormal::muevete(double tiempo){
 			raquetaI->incrPuntos();
 			resetGol();
 		break;
-	}
-	
-	if(colisionRaqI){
-		//TODO: Calcular tiempo	¿raquetaI->getTiempoColision(posicion,postPosicion,radio)?
 		
-		posicion += velocidad*tiempo;
+		default:
 		
-		velocidad += raquetaI->getRebote(posicion,velocidad);
-	}
+			if(colisionRaqI){
+				Vector posicionColision = raquetaI->getPosicionColision(posicion,postPosicion,radio);
+				double tiempoColision = mod(posicionColision)/mod(velocidad);
+				tiempo -= tiempoColision;
+							
+				posicion = posicionColision;
+				velocidad += raquetaI->getRebote(posicion,velocidad);
+				
+				muevete(tiempo);
+			}
 
-	else if(colisionRaqD){
-		//TODO: Calcular tiempo	¿raquetaD->getTiempoColision(posicion,postPosicion,radio)?
-		
-		posicion += velocidad*tiempo;
-		
-		velocidad += raquetaD->getRebote(posicion,velocidad);
+			else if(colisionRaqD){
+				Vector posicionColision = raquetaD->getPosicionColision(posicion,postPosicion,radio);
+				double tiempoColision = mod(posicionColision)/mod(velocidad);
+				tiempo -= tiempoColision;
+							
+				posicion += velocidad*tiempoColision;
+							
+				posicion = posicionColision;			
+				velocidad += raquetaD->getRebote(posicion,velocidad);
+				
+				muevete(tiempo);
+			}
+			else
+				posicion += velocidad*tiempo;
+				
+		break;
 	}
-	
-	
-	if(!colisionEsp && !colisionRaqI && !colisionRaqD){
-		posicion += velocidad*tiempo;
-		//tiempo = 0.0;
-	}
-	else	muevete(tiempo);
-	
-       
-       /*double X = posicion.x - postPosicion.x;
-		double x = X - ( (posX + ancho) - postPosicion.x );
-		double Y = postPosicion.y - posicion;
-			
-		double y = Y*x/X;
-			
-		double X = postPosicion.x - posicion.x;
-		double x = X - ( postPosicion.x - (posX - ancho) );
-		double Y = postPosicion.y - posicion;
 		
-		double y = Y*x/X;
-		*/
-	
 }
 
 Vector PelotaNormal::getPos() const{ return posicion; }

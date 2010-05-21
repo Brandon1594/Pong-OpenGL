@@ -5,6 +5,7 @@
 
 #include <Espacio.h>
 #include <Vector.h>
+#include <Pelota.h>
 #include <TipoColision.h>
 
 class Raqueta {

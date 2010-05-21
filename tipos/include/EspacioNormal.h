@@ -16,10 +16,13 @@ class EspacioNormal : public Espacio {
 	public:
 		EspacioNormal(int an, int al);
 		
-		TipoColision hayColision(Vector posicion, int radio) const;
+		TipoColision hayColision(Pelota*) const;
 		Vector getRebote(Vector velocidad) const;
 		int getAncho() const;
 		int getAlto() const;
+		
+	private:
+		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio);
 };
 
 #endif

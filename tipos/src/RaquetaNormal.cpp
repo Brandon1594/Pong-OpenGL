@@ -68,6 +68,41 @@ TipoColision RaquetaNormal::hayColision(Vector posicion, int radio) const {
 	return tColision;
 }
 
+Vector RaquetaNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio){
+	/* Para calcular el punto de colisión con la raqueta y la pelota y el
+	 * espacio que queda hasta que colisione usamos la proporcionalidad
+	 * entre triángulos tal y como se muestra en el esquema: 
+                                O  _  _ 
+                             | /|   |  |
+                             |/ |   |y |          Y/y = X/x
+                             *__|  _|  |Y
+                            /|  |      |          y = Yx/X
+                           /_|__|     _|
+                          O  '    
+                             |__|
+                              x
+                          |_____|
+                             X
+    */
+    
+    double X = fabs(posicion.x - postPosicion.x);
+	double x = X - (fabs( posX - postPosicion.x ) + ancho + radio );
+	double Y = posicion.y - posicion.y;
+		
+	double y = Y*x/X;
+	
+	Vector posicionColision = {0,y};
+	
+	if(posX < posicion.x)	//Raqueta Izquierda
+		posicionColision.x = posicion.x - x;
+	else	//Raqueta Derecha
+		posicionColision.x = posicion.x + x;
+	 
+	
+	return posicionColision;
+	
+}
+
 Vector RaquetaNormal::getRebote(Vector posicion, Vector velocidad) const{
 	
 	//Calculamos la aceleración del rebote

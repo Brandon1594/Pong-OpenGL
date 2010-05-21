@@ -34,6 +34,7 @@ class PelotaNormal : public Pelota {
 		
 	private:
 		void resetGol();
+		void muevete(double);
 };
 
 #endif

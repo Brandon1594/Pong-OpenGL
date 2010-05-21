@@ -36,6 +36,9 @@ class RaquetaNormal : public Raqueta {
 		int getAlto() const;
 		int getPuntos() const;
 		void reset();
+		
+	private:
+		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio);
 };
 
 #endif

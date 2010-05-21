@@ -17,9 +17,11 @@ EspacioNormal::EspacioNormal(int an, int al) : ancho(an),alto(al) {
 }
 
 //Comprobación de colisiones con la pelota.
-TipoColision EspacioNormal::hayColision(Vector posicion, int radio) const{
+TipoColision EspacioNormal::hayColision(Pelota* pelota) const{
 	
 	TipoColision tColision;
+	Vector posicion = pelota->getPos();
+	int radio = pelota->getRadio();
 	
 	if(posicion.y + radio >= alto || posicion.y - radio <= 0)
 		tColision = NORMAL;
@@ -34,6 +36,24 @@ TipoColision EspacioNormal::hayColision(Vector posicion, int radio) const{
 		tColision = GOL_IZQ;	
 
 	return tColision;
+}
+
+Vector EspacioNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio){
+	/* Para calcular el punto de colisión con el campo y la pelota y el
+	 * espacio que queda hasta que colisione usamos la proporcionalidad
+	 * entre triángulos tal y como se muestra en el esquema: 
+                                O  _  _ 
+                             | /|   |  |
+                             |/ |   |y |          Y/y = X/x
+                             *__|  _|  |Y
+                            /|  |      |          y = Yx/X
+                           /_|__|     _|
+                          O  '    
+                             |__|
+                              x
+                          |_____|
+                             X
+    */
 }
 
 //Devuelve la aceleración normal que genera el rebote
