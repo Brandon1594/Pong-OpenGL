@@ -36,8 +36,26 @@ clean:
 edit:
 	for dir in $(SUBMAKES_DIRS); do\
 		geany main.cpp &\
-		echo "** EJECUTANDO MAKE EDIT EN $$dir/ **";\
-		make -C $$dir edit;\
+		echo "** EJECUTANDO EDIT ALL EN $$dir/ **";\
+		make -C $$dir edit all;\
+		echo "** LISTO **";\
+		geany Makefile &\
+	done
+
+editsrc:
+	for dir in $(SUBMAKES_DIRS); do\
+		geany main.cpp &\
+		echo "** EJECUTANDO EDIT ALL EN $$dir/ **";\
+		make -C $$dir editsrc;\
+		echo "** LISTO **";\
+		geany Makefile &\
+	done
+
+edithead:
+	for dir in $(SUBMAKES_DIRS); do\
+		geany main.cpp &\
+		echo "** EJECUTANDO EDIT ALL EN $$dir/ **";\
+		make -C $$dir edithead;\
 		echo "** LISTO **";\
 		geany Makefile &\
 	done

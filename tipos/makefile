@@ -39,3 +39,9 @@ clean:
 
 edit:
 	$(EDITOR) $(INCLUDE_RUTE)/*.h $(SRC_RUTE)/*.cpp &
+
+editsrc:
+	$(EDITOR) $(SRC_RUTE)/*.cpp &
+
+edithead:
+	$(EDITOR) $(INCLUDE_RUTE)/*.h &
