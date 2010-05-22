@@ -13,10 +13,10 @@
 void inicializaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	
 	espacio = new EspacioNormal(1000,500);
-	//~ raquetaI = new RaquetaConvexa(40, 10, 60, 3, espacio,-70);
-	raquetaI = new RaquetaNormal(40, 10, 60, 5, espacio);
+	raquetaI = new RaquetaConvexa(40, 10, 60, 5wwwww, espacio,-70);
+	//~ raquetaI = new RaquetaNormal(40, 10, 60, 5, espacio);
 	raquetaD = new RaquetaNormal(960, 10, 60, 5, espacio);
-	pelota = new PelotaNormal(1.0, 8, raquetaI, raquetaD, espacio);
+	pelota = new PelotaNormal(3.0, 8, raquetaI, raquetaD, espacio);
 	
 }
 

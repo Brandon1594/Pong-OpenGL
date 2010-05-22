@@ -41,7 +41,7 @@ void itera(int nada){
 	pelota->muevete();
 	glutPostRedisplay();
 	
-	glutTimerFunc(3, itera, nada);
+	glutTimerFunc(10, itera, nada);
 }
 
 void dibujaTodo(){
