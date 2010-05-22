@@ -7,6 +7,7 @@
 
 #include <Espacio.h>
 #include <PongException.h>
+#include <cmath>
 
 class EspacioNormal : public Espacio {
 	private:
@@ -16,13 +17,11 @@ class EspacioNormal : public Espacio {
 	public:
 		EspacioNormal(int an, int al);
 		
-		TipoColision hayColision(Pelota*) const;
+		TipoColision hayColision(Vector posicion, int radio) const;
 		Vector getRebote(Vector velocidad) const;
+		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio) const;
 		int getAncho() const;
 		int getAlto() const;
-		
-	private:
-		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio);
 };
 
 #endif

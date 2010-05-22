@@ -13,9 +13,10 @@
 void inicializaTipos(Espacio*& espacio, Pelota*& pelota, Raqueta*& raquetaI, Raqueta*& raquetaD){
 	
 	espacio = new EspacioNormal(1000,500);
-	raquetaI = new RaquetaConvexa(30, 15, 60, 10, espacio,-70);
-	raquetaD = new RaquetaNormal(970, 15, 60, 10, espacio);
-	pelota = new PelotaNormal(4.0, 5, raquetaI, raquetaD, espacio);
+	//~ raquetaI = new RaquetaConvexa(40, 10, 60, 3, espacio,-70);
+	raquetaI = new RaquetaNormal(40, 10, 60, 5, espacio);
+	raquetaD = new RaquetaNormal(960, 10, 60, 5, espacio);
+	pelota = new PelotaNormal(1.0, 8, raquetaI, raquetaD, espacio);
 	
 }
 
@@ -34,6 +35,8 @@ void inicializaOGL(int ventanaAncho, int ventanaAlto){
 	glutCreateWindow("-* PONG *-");
 
 	gluOrtho2D(0.0, ventanaAncho, 0.0, ventanaAlto);
+	glEnable (GL_LINE_SMOOTH);	// Activar lineas con Antialiasing
+	glEnable (GL_LINE_STIPPLE);	// Activar lineas rayadass
 	
 	glClearColor(0,0,0,0);
 }
@@ -45,6 +48,16 @@ void dibuja(Espacio* espacio){
 		glVertex2i(espacio->getAncho(),espacio->getAlto());
 		glVertex2i(espacio->getAncho(), 1);
 	glEnd();
+	
+	glPushAttrib (GL_LINE_BIT);
+	glLineWidth (8);
+	glLineStipple (3, 0x1F1F);
+	
+	glBegin(GL_LINE_LOOP);
+		glVertex2i(espacio->getAncho()/2, espacio->getAlto());
+		glVertex2i(espacio->getAncho()/2, 0);
+	glEnd();
+	glPopAttrib ();
 }
 
 void dibuja(Pelota* pelota){

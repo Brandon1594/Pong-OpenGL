@@ -10,6 +10,7 @@
 
 #include <Raqueta.h>
 #include <PongException.h>
+#include <cmath>
 
 class RaquetaNormal : public Raqueta {
 	protected:
@@ -28,17 +29,15 @@ class RaquetaNormal : public Raqueta {
 		void mueveteArriba();
 		void mueveteAbajo();
 		void incrPuntos();
-		TipoColision hayColision(Pelota*) const;		
-		Vector getRebote(Pelota*) const;	
+		TipoColision hayColision(Vector posicion, int radio) const;
+		Vector getRebote(Pelota*) const;
+		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio) const;
 		int getPosX() const;
 		int getPosY() const;
 		int getAncho() const;
 		int getAlto() const;
 		int getPuntos() const;
 		void reset();
-		
-	private:
-		Vector getPosicionColision(Vector posicion, Vector postPosicion, int radio);
 };
 
 #endif

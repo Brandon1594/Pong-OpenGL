@@ -13,22 +13,22 @@
  * 		int posY;
  * 		int velocidad;
  * 		int puntuacion;
- * 		int tamanio;	//Es la mitad del largo de la raqueta
- * 		int ancho;
+ * 		int ancho;	//Es la mitad del ancho de la raqueta
+ *		int alto;	//Es la mitad del largo de la raqueta
  * 
  * 		const Espacio* espacio;
  */
 
-RaquetaNormal::RaquetaNormal(int pos_x, int tam, int an, int vel, Espacio*& esp) :
+RaquetaNormal::RaquetaNormal(int pos_x, int an, int al, int vel, Espacio*& esp) :
 	posX(pos_x),
 	velocidad(vel),
-	tamanio(tam),
 	ancho(an),
+	alto(al),
 	puntuacion(0),
 	espacio(esp)
 {
-	if(tamanio > espacio->getAlto()/2)
-		throw PongException("El tamaño de la raqueta no puede ser mayor que el alto del espacio.");
+	if(alto > espacio->getAlto()/2)
+		throw PongException("El alto de la raqueta no puede ser mayor que el alto del espacio.");
 
 	posY = espacio->getAlto()/2;
 	puntuacion = 0;
@@ -36,12 +36,12 @@ RaquetaNormal::RaquetaNormal(int pos_x, int tam, int an, int vel, Espacio*& esp)
 
 void RaquetaNormal::mueveteArriba(){
 	posY += velocidad;
-	if((posY + tamanio) > espacio->getAlto()) posY = espacio->getAlto() - tamanio;
+	if((posY + alto) > espacio->getAlto()) posY = espacio->getAlto() - alto;
 }
 
 void RaquetaNormal::mueveteAbajo(){
 	posY -= velocidad;
-	if((posY - tamanio) < 0) posY = tamanio; 
+	if((posY - alto) < 0) posY = alto; 
 }
 
 void RaquetaNormal::incrPuntos(){ puntuacion++; }
@@ -54,11 +54,11 @@ TipoColision RaquetaNormal::hayColision(Vector posicion, int radio) const {
 
 	if(
 		(
-			(x - radio <= posX + ancho && x + radio >= posX - ancho) ||
-			(x - radio <= posX + ancho && x + radio >= posX - ancho) 
+			(x - radio < posX + ancho && x + radio > posX - ancho) ||	//Raqueta Izq
+			(x - radio > posX + ancho && x + radio < posX - ancho) 		//Raqueta Der
 		) && 
-		y <= posY + tamanio &&
-		y >= posY - tamanio)
+		y < posY + alto &&
+		y > posY - alto)
 	{
 		tColision = NORMAL;
 	}
@@ -68,7 +68,18 @@ TipoColision RaquetaNormal::hayColision(Vector posicion, int radio) const {
 	return tColision;
 }
 
-Vector RaquetaNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio){
+Vector RaquetaNormal::getRebote(Pelota* pelota) const{
+	
+	//Calculamos la aceleración del rebote
+	Vector aceleracion = {
+		aceleracion.x = -2 * pelota->getVel().x,
+		aceleracion.y = 0
+	};
+	
+	return aceleracion;	
+}
+
+Vector RaquetaNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio) const{
 	/* Para calcular el punto de colisión con la raqueta y la pelota y el
 	 * espacio que queda hasta que colisione usamos la proporcionalidad
 	 * entre triángulos tal y como se muestra en el esquema: 
@@ -85,39 +96,32 @@ Vector RaquetaNormal::getPosicionColision(Vector posicion, Vector postPosicion, 
                              X
     */
     
-    double X = fabs(posicion.x - postPosicion.x);
-	double x = X - (fabs( posX - postPosicion.x ) + ancho + radio );
-	double Y = posicion.y - posicion.y;
-		
-	double y = Y*x/X;
-	
-	Vector posicionColision = {0,y};
-	
-	if(posX < posicion.x)	//Raqueta Izquierda
+    double Y,y,X,x;
+    Vector posicionColision;
+    
+    if((X = posicion.x - postPosicion.x) > 0){	//Raqueta Izq
+		x = posicion.x - posX - ancho - radio;
+		Y = posicion.y - postPosicion.y;
+		y = Y*x/X;
 		posicionColision.x = posicion.x - x;
-	else	//Raqueta Derecha
+		posicionColision.y = posicion.y + y;
+	}
+	else{										//Raqueta Der
+		x = posX - posicion.x - ancho - radio;
+		Y = posicion.y - postPosicion.y;
+		y = Y*x/X;
 		posicionColision.x = posicion.x + x;
-	 
+		posicionColision.y = posicion.y + y;
+	}	 
 	
 	return posicionColision;
 	
 }
 
-Vector RaquetaNormal::getRebote(Vector posicion, Vector velocidad) const{
-	
-	//Calculamos la aceleración del rebote
-	Vector aceleracion = {
-		aceleracion.x = -2 * velocidad.x,
-		aceleracion.y = 0
-	};
-	
-	return aceleracion;	
-}
-
 int RaquetaNormal::getPosX() const { return posX; }
 int RaquetaNormal::getPosY() const { return posY; }
-int RaquetaNormal::getTamanio() const { return tamanio; }
 int RaquetaNormal::getAncho() const { return ancho; }
+int RaquetaNormal::getAlto() const { return alto; }
 int RaquetaNormal::getPuntos() const { return puntuacion; }
 
 void RaquetaNormal::reset(){

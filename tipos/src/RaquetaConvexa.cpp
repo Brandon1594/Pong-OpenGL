@@ -34,12 +34,12 @@ RaquetaConvexa::RaquetaConvexa(int pos_x, int an, int al, int vel, Espacio*& esp
 
 Vector RaquetaConvexa::getRebote(Pelota* pelota) const{
 	
-	Vector direccion = { -distFocal , pelota.getPos().y - posY };
+	Vector direccion = { -distFocal , pelota->getPos().y - posY };
 	
-	Vector nuevaVelocidad = (direccion/mod(direccion)) * fabs(pelota.getVel().x);
-	nuevaVelocidad.y += pelota.getVel().y;
+	Vector nuevaVelocidad = (direccion/mod(direccion)) * fabs(pelota->getVel().x);
+	nuevaVelocidad.y += pelota->getVel().y;
 	
-	Vector aceleracion = nuevaVelocidad - pelota.getVel();
+	Vector aceleracion = nuevaVelocidad - pelota->getVel();
 	
 	return aceleracion;
 	

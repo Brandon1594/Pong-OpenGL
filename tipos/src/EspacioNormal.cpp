@@ -17,43 +17,67 @@ EspacioNormal::EspacioNormal(int an, int al) : ancho(an),alto(al) {
 }
 
 //Comprobación de colisiones con la pelota.
-TipoColision EspacioNormal::hayColision(Pelota* pelota) const{
+TipoColision EspacioNormal::hayColision(Vector posicion, int radio) const{
 	
 	TipoColision tColision;
-	Vector posicion = pelota->getPos();
-	int radio = pelota->getRadio();
 	
-	if(posicion.y + radio >= alto || posicion.y - radio <= 0)
+	if(posicion.y + radio > alto || posicion.y - radio < 0)
 		tColision = NORMAL;
 
 	else
 		tColision = NO_COLISION;
 	
-	if(posicion.x + radio >= ancho)
+	if(posicion.x + radio > ancho)
 		tColision = GOL_DER;
 	
-	else if(posicion.x - radio <= 0)
+	else if(posicion.x - radio < 0)
 		tColision = GOL_IZQ;	
 
 	return tColision;
 }
 
-Vector EspacioNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio){
+Vector EspacioNormal::getPosicionColision(Vector posicion, Vector postPosicion, int radio) const{
 	/* Para calcular el punto de colisión con el campo y la pelota y el
 	 * espacio que queda hasta que colisione usamos la proporcionalidad
 	 * entre triángulos tal y como se muestra en el esquema: 
                                 O  _  _ 
                              | /|   |  |
-                             |/ |   |y |          Y/y = X/x
-                             *__|  _|  |Y
-                            /|  |      |          y = Yx/X
+                             |/ |   |x |          X/x = Y/y
+                             *__|  _|  |X
+                            /|  |      |          x = Xy/Y
                            /_|__|     _|
                           O  '    
                              |__|
-                              x
+                              y
                           |_____|
-                             X
+                             Y
     */
+    
+    
+    double Y,y,X,x;
+    Vector posicionColision;
+    
+	if( (Y = posicion.y - postPosicion.y) <= 0 ){	//Choca arriba
+		Y = -Y;
+		y = alto - posicion.y - radio;
+		X = posicion.x - postPosicion.x;
+		x = X*y/Y;
+		
+		posicionColision.x = posicion.x - x;
+		posicionColision.y = posicion.y + y;
+	}
+	else{													//Choca abajo
+		y = posicion.y - radio;
+		X = posicion.x - postPosicion.x;
+		X = posicion.x - postPosicion.x;
+		x = X*y/Y;
+		
+		posicionColision.x = posicion.x - x;
+		posicionColision.y = posicion.y - y;
+	}	 
+	
+	return posicionColision;
+    
 }
 
 //Devuelve la aceleración normal que genera el rebote

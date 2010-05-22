@@ -44,19 +44,30 @@ void PelotaNormal::muevete(double tiempo){
     
     Vector postPosicion = posicion + velocidad*tiempo;
 
-	TipoColision colisionEsp = espacio->hayColision(this);
-	TipoColision colisionRaqI = raquetaI->hayColision(this);
-	TipoColision colisionRaqD = raquetaD->hayColision(this);
+	//Comprobamos las colisiones
+	TipoColision colisionEsp = espacio->hayColision(postPosicion, radio);
+	TipoColision colisionRaqI = raquetaI->hayColision(postPosicion, radio);
+	TipoColision colisionRaqD = raquetaD->hayColision(postPosicion, radio);
+	
+	//Según la colisión y su tipo, calcularemos dónde colisiona la pelota y
+	//tarda en hacerlo
+	Vector posicionColision;
+	double tiempoColision;
 
 	switch(colisionEsp){
 		case NORMAL:
-			Vector posicionColision = espacio->getPosicionColision(posicion,postPosicion,radio);
-			double tiempoColision = mod(posicionColision)/mod(velocidad);
+			posicionColision = espacio->getPosicionColision(posicion,postPosicion,radio);
+			tiempoColision = mod(posicionColision-posicion)/mod(velocidad);
+			
+			//Restamos al tiempo total de iteración el tiempo que ha consumido
+			//mover la pelota hasta la posición de colisión
 			tiempo -= tiempoColision;
 			
-			posicion = posicionColision;		
+			//Actualizamos la posición y la velocidad
+			posicion = posicionColision;
 			velocidad += espacio->getRebote(velocidad);
 			
+			//LLamada recursiva con el nuevo tiempo
 			muevete(tiempo);
 		break;
 
@@ -73,29 +84,39 @@ void PelotaNormal::muevete(double tiempo){
 		default:
 		
 			if(colisionRaqI){
-				Vector posicionColision = raquetaI->getPosicionColision(posicion,postPosicion,radio);
-				double tiempoColision = mod(posicionColision)/mod(velocidad);
+				posicionColision = raquetaI->getPosicionColision(posicion,postPosicion,radio);
+				tiempoColision = mod(posicionColision-posicion)/mod(velocidad);
+				
+				//Restamos al tiempo total de iteración el tiempo que ha consumido
+				//mover la pelota hasta la posición de colisión
 				tiempo -= tiempoColision;
 							
+				//Actualizamos la posición y la velocidad
 				posicion = posicionColision;
-				velocidad += raquetaI->getRebote(posicion,velocidad);
+				velocidad += raquetaI->getRebote(this);
 				
+				//LLamada recursiva con el nuevo tiempo
 				muevete(tiempo);
 			}
 
 			else if(colisionRaqD){
-				Vector posicionColision = raquetaD->getPosicionColision(posicion,postPosicion,radio);
-				double tiempoColision = mod(posicionColision)/mod(velocidad);
-				tiempo -= tiempoColision;
-							
-				posicion += velocidad*tiempoColision;
-							
-				posicion = posicionColision;			
-				velocidad += raquetaD->getRebote(posicion,velocidad);
+				posicionColision = raquetaD->getPosicionColision(posicion,postPosicion,radio);
+				tiempoColision = mod(posicionColision-posicion)/mod(velocidad);
 				
+				//Restamos al tiempo total de iteración el tiempo que ha consumido
+				//mover la pelota hasta la posición de colisión
+				tiempo -= tiempoColision;
+				
+				//Actualizamos la posición y la velocidad
+				posicion = posicionColision;			
+				velocidad += raquetaD->getRebote(this);
+				
+				//LLamada recursiva con el nuevo tiempo
 				muevete(tiempo);
 			}
 			else
+				//Si no ha colisionado llegamos al caso base, dónde avanzamos la
+				//pelota el tiempo restante
 				posicion += velocidad*tiempo;
 				
 		break;
@@ -105,7 +126,7 @@ void PelotaNormal::muevete(double tiempo){
 
 Vector PelotaNormal::getPos() const{ return posicion; }
 int PelotaNormal::getRadio() const{ return radio; }
-Vector getVel() const{ return velocidad; }
+Vector PelotaNormal::getVel() const{ return velocidad; }
 
 void PelotaNormal::reset(double modVel){
 	//Centramos la pelota en el campo
